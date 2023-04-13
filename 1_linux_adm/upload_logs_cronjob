@@ -1,0 +1,3 @@
+# /etc/cron.d/upload_logs: crontab for uploading logs to remote target 
+SHELL=/bin/sh
+0 4 * * * admini /home/admini/utils/upload_logs.sh
