@@ -29,7 +29,9 @@ do
     dd if=/dev/urandom of=$LOCAL_LOG_FOLDER/$FILE_NAME bs=1M count=1 || echo "$SCRIPT_NAME: Failed to write to $LOCAL_LOG_FOLDER. Check for correct permissions and run script again."
     
     # Передаем его на целевую машину
-    rsync -qzat -e "ssh -i $SSH_KEY" $LOCAL_LOG_FOLDER/$FILE_NAME $TARGET_USER@$TARGET_HOST:$TARGET_PATH
+    scp -i $SSH_KEY $LOCAL_LOG_FOLDER/$FILE_NAME $TARGET_USER@$TARGET_HOST:$TARGET_PATH
+    # rsync не установлен
+    # rsync -qzat -e "ssh -i $SSH_KEY" $LOCAL_LOG_FOLDER/$FILE_NAME $TARGET_USER@$TARGET_HOST:$TARGET_PATH
     
     # Проверяем старые логи и удаляем, если они были созданы более 7 дней назад. 
     ssh -i $SSH_KEY $TARGET_USER@$TARGET_HOST find $TARGET_PATH -mtime +7 -iname $LOG_NAME_PREFIX -delete
